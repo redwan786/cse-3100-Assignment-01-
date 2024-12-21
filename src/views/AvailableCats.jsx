@@ -1,27 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const availableCats = [
-  { name: 'Whiskers', age: '2', breed: 'Sphynx' },
-  { name: 'Mittens', age: '2', breed: 'Bengal' },
-  { name: 'Shadow', age: '1', breed: 'Persian' },
-  { name: 'Pumpkin', age: '3', breed: 'Abyssinian' },
-  { name: 'Luna', age: '4', breed: 'Siamese' },
-  { name: 'Simba', age: '2', breed: 'Birman' },
+  { name: "Whiskers", age: "2", breed: "Sphynx" },
+  { name: "Mittens", age: "2", breed: "Bengal" },
+  { name: "Shadow", age: "1", breed: "Persian" },
+  { name: "Pumpkin", age: "3", breed: "Abyssinian" },
+  { name: "Luna", age: "4", breed: "Siamese" },
+  { name: "Simba", age: "2", breed: "Birman" },
+  { name: "Mochi", age: "1", breed: "Ragdoll" },
+  { name: "Cleo", age: "3", breed: "Maine Coon" },
+  { name: "Milo", age: "2", breed: "Scottish Fold" },
+  { name: "Nala", age: "3", breed: "Savannah" },
+  { name: "Tigger", age: "4", breed: "Norwegian Forest" },
 ];
 
 export default function AvailableCats() {
   const [cats, setCats] = useState([]);
   const [filteredCats, setFilteredCats] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [selectedBreed, setSelectedBreed] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [selectedBreed, setSelectedBreed] = useState("");
 
   useEffect(() => {
-    // Fetch cat images from an API endpoint and assign it to the featuredCats list
     const fetchCatImages = async () => {
       try {
         const responses = await Promise.all(
           availableCats.map(() =>
-            fetch('https://api.thecatapi.com/v1/images/search').then((res) => res.json())
+            fetch("https://api.thecatapi.com/v1/images/search").then((res) =>
+              res.json()
+            )
           )
         );
         const catsWithImages = availableCats.map((cat, index) => ({
@@ -32,7 +38,7 @@ export default function AvailableCats() {
         setCats(catsWithImages);
         setFilteredCats(catsWithImages);
       } catch (error) {
-        console.error('Error fetching cat images:', error);
+        console.error("Error fetching cat images:", error);
       }
     };
 
@@ -55,7 +61,9 @@ export default function AvailableCats() {
     let updatedCats = cats;
 
     if (text) {
-      updatedCats = updatedCats.filter((cat) => cat.name.toLowerCase().includes(text));
+      updatedCats = updatedCats.filter((cat) =>
+        cat.name.toLowerCase().includes(text)
+      );
     }
 
     if (breed) {
@@ -90,26 +98,31 @@ export default function AvailableCats() {
           <option value="Abyssinian">Abyssinian</option>
           <option value="Siamese">Siamese</option>
           <option value="Birman">Birman</option>
+          <option value="Ragdoll">Ragdoll</option>
+          <option value="Maine Coon">Maine Coon</option>
+          <option value="Scottish Fold">Scottish Fold</option>
+          <option value="Savannah">Savannah</option>
+          <option value="Norwegian Forest">Norwegian Forest</option>
         </select>
       </div>
 
       <div
         className="mt-4 row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 cats-container"
         id="cats-container"
-        style={{ marginLeft: 'auto', marginRight: 'auto', maxWidth: '1200px' }}
+        style={{ marginLeft: "auto", marginRight: "auto", maxWidth: "1200px" }}
       >
-        {filteredCats.map((cat, i) => (
+        {filteredCats.slice(0, 6).map((cat, i) => (
           <div key={i} className="col">
             <div
               className="cat-card"
               style={{
-                padding: '16px',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                backgroundColor: '#fff',
-                textAlign: 'center',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                height: '350px', // Ensure uniform card height
+                padding: "16px",
+                border: "1px solid #ddd",
+                borderRadius: "8px",
+                backgroundColor: "#fff",
+                textAlign: "center",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                height: "350px",
               }}
             >
               <img
@@ -117,10 +130,10 @@ export default function AvailableCats() {
                 alt={cat.name}
                 className="img-fluid mb-2"
                 style={{
-                  borderRadius: '8px',
-                  height: '200px', // Fixed image height
-                  objectFit: 'cover',
-                  maxWidth: '100%',
+                  borderRadius: "8px",
+                  height: "200px",
+                  objectFit: "cover",
+                  maxWidth: "100%",
                 }}
               />
               <div className="cat-info">
